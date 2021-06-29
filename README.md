@@ -2,7 +2,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ##Team members
 1. Marlon Pinello
-2.
+2. Víctor Medrano
 3.
 4.
 
