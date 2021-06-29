@@ -1,8 +1,9 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ##Team members
-1. 
-2.
+
+1.
+2. Víctor Medrano
 3.
 4.
 
