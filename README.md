@@ -4,7 +4,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 1. Marlon Pinello
 2. Víctor Medrano
-3.
+3. Jazmín Patrón
 4.
 
 ## Getting Started
