@@ -1,0 +1,12 @@
+.task {
+  width: 35rem;
+  height: 5rem;
+  margin: auto;
+  margin-bottom: 1rem;
+  border-style: solid;
+  border-radius: 5px;
+}
+
+.task:hover {
+  background-color: yellow;
+}
