@@ -5,6 +5,14 @@ const typeDefs = gql`
     author: String
   }
   
+  type Subtask{
+      
+  }
+  
+  type Task{
+      
+  }
+  
   type User {
       id: String
       nombre: String
@@ -22,6 +30,10 @@ const typeDefs = gql`
     addUser(id: String, nombre: String, correo: String, secret: String): User
   }
 `;
+
+const tasks = []
+
+const subtasks = []
 
 const users = [
     {
