@@ -40,15 +40,16 @@ const typeDefs = gql`
   type Query {
     books: [Book]
     users: [User]
-    user(id: String!): User
+    user(secret: String!): User
     tasks: [Task]
+    subtasks(id: String!): [Subtask]
   }
 
   type Mutation {
     addBook(title: String, author: String): Book
     addUser(id: String, nombre: String, correo: String, secret: String): User
     addTask(category: String, title: String, description: String, status: String, start_date: String, end_date: String, finished_date: String, check_user_id: String): Task
-    addSubtask(category: String, title: String, description: String, status: String, start_date: String, end_date: String, finished_date: String, check_user_id: String): Task
+    addSubtask(task_id: String, id: String, category: String, title: String, description: String, status: String, start_date: String, end_date: String, finished_date: String, check_user_id: String): Subtask
     updateUser(id: String, nombre: String, correo: String): User
   }
 `;
@@ -146,6 +147,7 @@ const resolvers = {
         users: () => users,
         user: (_,args) => users.find(el => el.secret === args.secret),
         tasks: () => tasks,
+        subtasks: (_,args) => tasks.find(el => el.id === args.id).sub_tasks,
     },
     Mutation: {
         addBook: (_, args) => {
@@ -167,6 +169,11 @@ const resolvers = {
             user.nombre = args.nombre;
             user.correo = args.correo;
             return user;
+        },
+        addSubtask: (_, args) => {
+            const subtasks = tasks.find(el => el.id === args.task_id).sub_tasks;
+            subtasks.push({id: args.id, category: args.category, title: args.title, description: args.description, status: args.status, start_date: args.start_date, end_date: args.end_date, finished_date: args.finished_date, check_user_id: args.check_user_id});
+            return subtasks[subtasks.length - 1];
         }
     }
 };
