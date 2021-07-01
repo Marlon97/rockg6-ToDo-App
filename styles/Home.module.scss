@@ -1,18 +1,21 @@
 .container {
   min-height: 100vh;
-  padding: 0 0.5rem;
-  display: flex;
-  flex-direction: column;
+  padding: 2rem 5rem;
   justify-content: center;
   align-items: center;
   height: 100vh;
 }
 
+.forms {
+  width: 90%;
+  border: 1px solid white;
+  margin: 50px auto 0;
+  padding: 1em;
+  text-align: center;
+}
+
 .main {
-  padding: 5rem 0;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
+  top: 20rem;
   justify-content: center;
   align-items: center;
 }
@@ -24,6 +27,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  bottom: 0;
 }
 
 .footer a {
@@ -47,7 +51,7 @@
 .title {
   margin: 0;
   line-height: 1.15;
-  font-size: 4rem;
+  font-size: 3rem;
 }
 
 .title,
@@ -58,6 +62,7 @@
 .description {
   line-height: 1.5;
   font-size: 1.5rem;
+  margin-bottom: -2rem;
 }
 
 .code {
@@ -118,4 +123,60 @@
     width: 100%;
     flex-direction: column;
   }
+}
+
+.btn-abrir-popup {
+  padding: 0 20px;
+  margin-bottom: 20px;
+  height: 40px;
+  line-height: 40px;
+  border: none;
+  color: rgb(241, 238, 238);
+  background: #317df0;
+  border-radius: 20px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 24px;
+  cursor: pointer;
+  transition: 0.3s ease all;
+  cursor: pointer;
+}
+
+.contenedor {
+  width: 90%;
+  max-width: 1000px;
+  margin: 20px auto;
+}
+
+.contenedor article {
+  line-height: 28px;
+}
+
+.contenedor article h1 {
+  font-size: 30px;
+  text-align: left;
+  padding: 50px 0;
+}
+
+.contenedor article p {
+  margin-bottom: 20px;
+}
+
+.contenedor article .btn-abrir-popup {
+  padding: 0 20px;
+  margin-bottom: 20px;
+  height: 40px;
+  line-height: 40px;
+  border: none;
+  color: #fff;
+  background: #5e7de3;
+  border-radius: 3px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s ease all;
+  cursor: pointer;
+}
+
+.contenedor article .btn-abrir-popup:hover {
+  background: rgba(94, 125, 227, 0.9);
 }
