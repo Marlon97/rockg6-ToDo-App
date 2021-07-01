@@ -4,9 +4,23 @@ import styles from "../styles/Home.module.scss";
 import Task from "../components/Task";
 import Popup from "../components/Popup";
 import { useState } from "react";
+import TaskList from "../components/TaskList";
+
+const tasks = [
+  {
+    title: "Jazmín",
+  },
+  {
+    title: "Daniel",
+  },
+];
 
 export default function Home() {
   const [hidden, setHidden] = useState(true);
+
+  const onFormSubmit = (data) => {
+    tasks.push(data);
+  };
 
   return (
     <div className={styles.container}>
@@ -24,22 +38,19 @@ export default function Home() {
 
       <div className={styles.forms}>
         <button
-          onClick={() => setHidden(!hidden)}
+          onClick={() => setHidden(false)}
           id="btn-abrir-popup"
           className={styles["btn-abrir-popup"]}
         >
-          Click here to add task
+          Add new task
         </button>
-        <form>
-          <input type="text"></input>
-          <input type="submit"></input>
-        </form>
       </div>
 
-      <Task number={1} />
-      <Task number={2} />
-      <Task number={3} />
-      <Popup hidden={hidden} />
+      <TaskList tasks={tasks} />
+
+      {!hidden && (
+        <Popup onceSubmited={(data) => onFormSubmit(data)} close={setHidden} />
+      )}
     </div>
   );
 }
