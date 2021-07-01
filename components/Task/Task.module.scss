@@ -1,12 +1,12 @@
 .task {
   width: 35rem;
-  height: 5rem;
-  margin: auto;
+  height: 3.5rem;
+  margin: 2% auto;
   margin-bottom: 1rem;
-  border-style: solid;
-  border-radius: 5px;
+  border-style: ridge;
+  border-radius: 100px;
 }
 
 .task:hover {
-  background-color: yellow;
+  background-color: rgb(255, 255, 144);
 }
