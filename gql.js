@@ -145,7 +145,10 @@ const resolvers = {
     Query: {
         books: () => books,
         users: () => users,
-        user: (_,args) => users.find(el => el.secret === args.secret),
+        user: (_,args) => {
+            const current_user = users.find(el => el.secret === args.secret);
+            return current_user?current_user:{};
+            },
         tasks: () => tasks,
         subtasks: (_,args) => tasks.find(el => el.id === args.id).sub_tasks,
     },
