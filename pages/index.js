@@ -17,7 +17,6 @@ const tasks = [
 
 export default function Home() {
   const [hidden, setHidden] = useState(true);
-
   const onFormSubmit = (data) => {
     tasks.push(data);
   };
@@ -32,27 +31,29 @@ export default function Home() {
         </Head>
 
         <main className={styles.main}>
-         <h1 className={styles.title}>Your ToDo's</h1>
+          <h1 className={styles.title}>Your ToDo's</h1>
 
           <p className={styles.description}>Let's start by adding a task</p>
         </main>
 
+        <div className={styles.forms}>
+          <button
+            onClick={() => setHidden(false)}
+            id="btn-abrir-popup"
+            className={styles["btn-abrir-popup"]}
+          >
+            Add new task
+          </button>
+        </div>
 
-      <div className={styles.forms}>
-        <button
-          onClick={() => setHidden(false)}
-          id="btn-abrir-popup"
-          className={styles["btn-abrir-popup"]}
-        >
-          Add new task
-        </button>
-      </div>
+        <TaskList tasks={tasks} />
 
-      <TaskList tasks={tasks} />
-
-      {!hidden && (
-        <Popup onceSubmited={(data) => onFormSubmit(data)} close={setHidden} />
-      )}
+        {!hidden && (
+          <Popup
+            onceSubmited={(data) => onFormSubmit(data)}
+            close={setHidden}
+          />
+        )}
       </div>
     </body>
   );
