@@ -2,8 +2,12 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.scss";
 import Task from "../components/Task";
+import Popup from "../components/Popup";
+import { useState } from "react";
 
 export default function Home() {
+  const [hidden, setHidden] = useState(true);
+
   return (
     <div className={styles.container}>
       <Head>
@@ -18,9 +22,24 @@ export default function Home() {
         <p className={styles.description}>Get started by adding your tasks.</p>
       </main>
 
+      <div className={styles.forms}>
+        <button
+          onClick={() => setHidden(!hidden)}
+          id="btn-abrir-popup"
+          className={styles["btn-abrir-popup"]}
+        >
+          Click here to add task
+        </button>
+        <form>
+          <input type="text"></input>
+          <input type="submit"></input>
+        </form>
+      </div>
+
       <Task number={1} />
       <Task number={2} />
       <Task number={3} />
+      <Popup hidden={hidden} />
     </div>
   );
 }
