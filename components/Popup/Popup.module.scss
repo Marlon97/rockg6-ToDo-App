@@ -1,12 +1,150 @@
-.popup {
-  width: 35rem;
-  height: 5rem;
-  margin: auto;
-  margin-bottom: 1rem;
-  border-style: solid;
-  border-radius: 5px;
+.overlay {
+  background: rgba(0, 0, 0, 0.3);
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
 
-  &.hidden {
-    visibility: hidden;
+.popup {
+  background: #f8f8f8;
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  font-family: "Montserrat", sans-serif;
+  padding: 20px;
+  text-align: center;
+  width: 60rem;
+  height: 30rem;
+  transition: 0.3s ease all;
+  transform: scale(0.7);
+  opacity: 1;
+
+  .closeBtn {
+    display: flex;
+    justify-content: flex-end;
+    & button {
+      color: #686868;
+      background: transparent;
+      border: none;
+      font-size: 25px;
+      cursor: pointer;
+      &:hover {
+        color: #000;
+      }
+    }
+  }
+}
+
+.popup h3 {
+  font-size: 36px;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  opacity: 1;
+}
+
+.popup h4 {
+  font-size: 26px;
+  font-weight: 300;
+  margin-bottom: 40px;
+  opacity: 1;
+}
+
+.popup form .task-inputs {
+  opacity: 1;
+}
+
+.popup form .task-inputs input {
+  width: 90%;
+  margin-bottom: 20px;
+  height: 52px;
+  font-size: 18px;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 52px;
+  text-align: center;
+  border: 1px solid #bbbbbb;
+}
+
+.popup form .task-inputs textarea {
+  width: 90%;
+  margin-bottom: 20px;
+  height: 100px;
+  color: -internal-light-dark(black, white);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  line-height: 52px;
+  text-align: center;
+  border: 1px solid #bbbbbb;
+}
+
+.popup form .btn-submit {
+  padding: 0 20px;
+  height: 40px;
+  line-height: 40px;
+  border: none;
+  color: #fff;
+  background: #5e7de3;
+  border-radius: 3px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 22px;
+  cursor: pointer;
+  transform: translateY(2rem);
+  transition: 0.3s ease all;
+}
+
+.popup form .btn-submit:hover {
+  background: rgba(94, 125, 227, 0.9);
+}
+
+/* ------------------------- */
+/* ANIMACIONES */
+/* ------------------------- */
+.popup.active {
+  transform: scale(1);
+  opacity: 0;
+}
+.popup.active h3 {
+  animation: entradaTitulo 0.8s ease 0.5s forwards;
+}
+.popup.active h4 {
+  animation: entradaSubtitulo 0.8s ease 0.5s forwards;
+}
+.popup.active .contenedor-inputs {
+  animation: entradaInputs 1s linear 1s forwards;
+}
+
+@keyframes entradaTitulo {
+  from {
+    opacity: 1;
+    transform: translateY(-25px);
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 0;
+  }
+}
+
+@keyframes entradaSubtitulo {
+  from {
+    opacity: 1;
+    transform: translateY(25px);
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 0;
+  }
+}
+
+@keyframes entradaInputs {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
   }
 }
