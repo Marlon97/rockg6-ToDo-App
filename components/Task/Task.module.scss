@@ -1,12 +1,44 @@
 .task {
-  width: 35rem;
-  height: 3.5rem;
-  margin: 2% auto;
-  margin-bottom: 1rem;
+  width: 50rem;
+  height: 24rem;
+  margin: 5% auto;
+  margin-bottom: 5rem;
   border-style: ridge;
-  border-radius: 100px;
+  border-radius: 50px;
 }
 
 .task:hover {
-  background-color: rgb(255, 255, 144);
+  background-color: rgb(255, 255, 255, 0.2);
+}
+
+.title {
+  padding: 2rem;
+  border-bottom: 2px solid black;
+  font-size: 1.5rem;
+}
+
+.description {
+  padding: 2rem;
+  border-top: 2px solid black; //transparent; //#000;
+  border-bottom: 2px solid black;
+  
+}
+
+.startDate {
+  padding: 2rem;
+  border-top: 2px solid black;
+  border-bottom: 2px solid black;
+  
+}
+
+.endDate {
+  padding: 2rem;
+  border-top: 2px solid black;
+  
+}
+
+.cb {
+  position: relative;
+  top: 57px;
+  left: 9px;
 }
