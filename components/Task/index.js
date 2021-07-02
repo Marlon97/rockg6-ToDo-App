@@ -1,7 +1,17 @@
 import styles from "./Task.module.scss";
 
-const Task = (props) => {
-  return <div className={styles.task}>{props.title}</div>;
+
+const Task = ({element, title, open, close,point}) => {
+  return <div className={styles.task}>
+    <div>{title}</div>
+      <div className={styles.container}>
+        <button className={styles.editTask} onClick={() => open(false)}> &#9999; </button>
+        <button className={styles.removeTask} onClick={() => 
+          {close(false);
+           point(element);
+          }}>&#9746;</button>
+      </div>
+  </div>;
 };
 
 export default Task;

@@ -5,6 +5,7 @@ import Task from "../components/Task";
 import Popup from "../components/Popup";
 import { useState } from "react";
 import TaskList from "../components/TaskList";
+import PopupRemove from "../components/PopupRemove";
 
 const tasks = [
   {
@@ -15,14 +16,23 @@ const tasks = [
   },
 ];
 
+
+// Sets the submit task window as hidden.
 export default function Home() {
   const [hidden, setHidden] = useState(true);
+  const [hiddenRemove, setHiddenRemove] = useState(true);
   const onFormSubmit = (data) => {
     tasks.push(data);
   };
 
+  var toDelete;
+
+  const pointElement = (element) => {
+    toDelete=element;
+  };
+
   return (
-    <body>
+    <>
       <div className={styles.container}>
         <Head>
           <title>ToDo App</title>
@@ -46,7 +56,7 @@ export default function Home() {
           </button>
         </div>
 
-        <TaskList tasks={tasks} />
+        <TaskList tasks={tasks} open={setHidden} close={setHiddenRemove}  point={pointElement}/>
 
         {!hidden && (
           <Popup
@@ -54,7 +64,15 @@ export default function Home() {
             close={setHidden}
           />
         )}
+
+        {!hiddenRemove && (
+          <PopupRemove
+            close={setHiddenRemove}
+            item = {toDelete}
+            tasks = {tasks}
+          />
+        )}
       </div>
-    </body>
+    </>
   );
 }

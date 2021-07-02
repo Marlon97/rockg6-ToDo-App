@@ -1,0 +1,89 @@
+.overlay {
+  background: rgba(0, 0, 0, 0.3);
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+.popup {
+  background: #f8f8f8;
+  box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  font-family: "Montserrat", sans-serif;
+  padding: 20px;
+  text-align: center;
+  width: 60rem;
+  height: 15rem;
+  transition: 0.3s ease all;
+  transform: scale(0.7);
+  opacity: 1;
+
+  .container {
+    display: grid;
+  }
+
+  .closeBtn {
+    display: flex;
+    justify-content: flex-end;
+    & button {
+      color: #686868;
+      background: transparent;
+      border: none;
+      font-size: 25px;
+      cursor: pointer;
+      &:hover {
+        color: #000;
+      }
+    }
+  }
+  .accept {
+    width: 180px;
+    height: 60px;
+    font-family: "Montserrat", sans-serif;
+    font-size: 24px;
+    grid-column-start: 1;
+  }
+
+  .cancel {
+    width: 180px;
+    height: 60px;
+    font-family: "Montserrat", sans-serif;
+    font-size: 24px;
+    grid-column-start: 2;
+  }
+}
+
+.popup h3 {
+  font-size: 36px;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  opacity: 1;
+}
+
+
+
+.popup form .btn-submit:hover {
+  background: rgba(94, 125, 227, 0.9);
+}
+
+/* ------------------------- */
+/* ANIMACIONES */
+/* ------------------------- */
+.popup.active {
+  transform: scale(1);
+  opacity: 0;
+}
+.popup.active h3 {
+  animation: entradaTitulo 0.8s ease 0.5s forwards;
+}
+.popup.active h4 {
+  animation: entradaSubtitulo 0.8s ease 0.5s forwards;
+}
+.popup.active .contenedor-inputs {
+  animation: entradaInputs 1s linear 1s forwards;
+}
