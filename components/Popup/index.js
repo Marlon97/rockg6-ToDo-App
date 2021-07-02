@@ -26,10 +26,10 @@ const Popup = ({ onceSubmited, close }) => {
               className="description"
               placeholder="Your task description (optional)"
             ></textarea>
-              <label for="meeting-time">_____Choose date and time to start your task:</label>
-              <input type="datetime-local" id="meeting-time" name="meeting-time" value="2018-06-12T19:30" min="2018-06-07T00:00" max="2018-06-14T00:00"></input>
-              <label for="meeting-time">_____Choose date and time to end your task:</label>
-              <input type="datetime-local" id="meeting-time" name="meeting-time" value="2018-06-12T19:30" min="2018-06-07T00:00" max="2018-06-14T00:00"></input>
+              <label>_______Start date:</label>
+              <input {...register("startDate")} type="datetime-local" id="start-meeting-time" name="start-meeting-time" onChange={() => {}} value="2018-06-12T19:30" min="2018-06-07T00:00" max="2018-06-14T00:00" ></input>
+              <label>________End date:</label>
+              <input {...register("endDate")} type="datetime-local" id="end-meeting-time" name="end-meeting-time" onChange={() => {}} value="2018-06-12T19:30" min="2018-06-07T00:00" max="2018-06-14T00:00" ></input>
           </div>
           <input type="submit" className={styles["btn-submit"]} value="Add" />
         </form>
