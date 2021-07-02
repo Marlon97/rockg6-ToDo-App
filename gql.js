@@ -47,12 +47,14 @@ const typeDefs = gql`
 
   type Mutation {
     addBook(title: String, author: String): Book
-    addUser(id: String, nombre: String, correo: String, secret: String): User
+    addUser(nombre: String, correo: String, secret: String): User
     addTask(category: String, title: String, description: String, status: String, start_date: String, end_date: String, finished_date: String, check_user_id: String): Task
     addSubtask(task_id: String, id: String, category: String, title: String, description: String, status: String, start_date: String, end_date: String, finished_date: String, check_user_id: String): Subtask
     updateUser(id: String, nombre: String, correo: String): User
   }
 `;
+
+const fs = require("fs");
 
 const tasks = [
     {
@@ -104,6 +106,9 @@ const tasks = [
     }
 ];
 
+const users = require('./users.json');
+
+/**
 const users = [
     {
         id: "GH1000001",
@@ -130,6 +135,9 @@ const users = [
         secret: "dan#iel#secret"
     }
 ];
+ **/
+
+let taskss = [];
 
 const books = [
     {
@@ -159,9 +167,22 @@ const resolvers = {
             return 1;
         },
         addUser: (_, args) => {
-            console.log(args);
-            users.push({...args});
-            return 1;
+            let user = users.find(el => el.secret === args.secret);
+            if(!user){
+                user = {
+                    id: Date.now()+"-"+(Math.floor(Math.random() * (1000000 - 100000)) + 100000),
+                    nombre: args.nombre,
+                    correo: args.correo,
+                    secret:args.secret
+                };
+                users.push({...user});
+                const data = JSON.stringify(users, '', 2);
+                fs.writeFile('./users.json', data, () => {
+                    console.log("users database updated :) ")
+                });
+
+            }
+            return user;
         },
         addTask: (_, args) => {
             console.log(args);
