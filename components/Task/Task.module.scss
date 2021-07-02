@@ -1,23 +1,23 @@
 .task {
-  width: 35rem;
-  height: 3.5rem;
-  margin: 2% auto;
-  margin-bottom: 1rem;
+  width: 50rem;
+  height: 24rem;
+  margin: 5% auto;
+  margin-bottom: 5rem;
   border-style: ridge;
-  border-radius: 100px;
+  border-radius: 50px;
 }
 
 .task:hover {
-  background-color: rgb(255, 255, 144);
+  background-color: rgb(255, 255, 255, 0.2);
 }
 
 .container {
+  transform: translateX(-30px) translateY(-320px);
+  justify-content: right;
+  position: relative;
   display: grid;
   grid-template-columns: 30px 30px;
   grid-gap: 10px;
-  //grid-auto-rows: minmax(100px, auto);
-  //justify-items: end;
-  margin-left: 31rem;
 }
 
 .editTask {
@@ -42,4 +42,36 @@
 
 .removeTask:hover {
   opacity: 100%;
+}
+
+.title {
+  padding: 2rem;
+  border-bottom: 2px solid black;
+  font-size: 1.5rem;
+}
+
+.description {
+  padding: 2rem;
+  border-top: 2px solid white; //transparent; //#000;
+  border-bottom: 2px solid black;
+  
+}
+
+.startDate {
+  padding: 2rem;
+  border-top: 2px solid white;
+  border-bottom: 2px solid black;
+  
+}
+
+.endDate {
+  padding: 2rem;
+  border-top: 2px solid white;
+  
+}
+
+.cb {
+  position: relative;
+  top: 57px;
+  left: 9px;
 }
