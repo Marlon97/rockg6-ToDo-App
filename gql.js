@@ -56,6 +56,7 @@ const typeDefs = gql`
 
 const fs = require("fs");
 
+/**
 const tasks = [
     {
         id: "t1",
@@ -105,6 +106,7 @@ const tasks = [
         sub_tasks: []
     }
 ];
+ **/
 
 const users = require('./users.json');
 
@@ -137,7 +139,8 @@ const users = [
 ];
  **/
 
-let taskss = [];
+let tasks = [];
+let tasks_path = "";
 
 const books = [
     {
@@ -167,6 +170,10 @@ const resolvers = {
             return 1;
         },
         addUser: (_, args) => {
+            //console.log("users: ",users);
+            //console.log("to_users: ",typeof(users)===typeof([]));
+            //console.log("f_tasks: ",tasks);
+            //console.log("to_f_tasks: ",typeof(tasks)===typeof([]));
             let user = users.find(el => el.secret === args.secret);
             if(!user){
                 user = {
@@ -180,13 +187,46 @@ const resolvers = {
                 fs.writeFile('./users.json', data, () => {
                     console.log("users database updated :) ")
                 });
+                tasks_path = './'+user.id+".json";
 
+                fs.writeFile(tasks_path, JSON.stringify([], '', 2), () => {
+                    console.log("user tasks file created :) ")
+                });
+
+
+            }else {
+                tasks_path = './' + user.id + ".json";
             }
+            try {
+                tasks = require(tasks_path);
+            } catch (error) {
+                tasks = [];
+                console.log("json vacío");
+            }
+            //console.log("tasks_path: ",tasks_path)
+            //console.log("tasks: ",tasks);
+            //console.log("to_tasks: ",typeof(tasks)===typeof({}));
             return user;
         },
         addTask: (_, args) => {
-            console.log(args);
-            tasks.push({...args});
+            let task = {
+                id: "t" + Date.now() + "-" + (Math.floor(Math.random() * (1000000 - 100000)) + 100000),
+                category: args.category,
+                title: args.title,
+                description: args.description,
+                status: args.status,
+                start_date: args.start_date,
+                end_date: args.end_date,
+                finished_date: "",
+                check_user_id: "",
+                sub_tasks: []
+            }
+            tasks.push({...task});
+            const data = JSON.stringify(tasks, '', 2);
+            fs.writeFile(tasks_path, data, () => {
+                console.log("tasks database updated :) ")
+            });
+            return task;
         },
         updateUser: (_, args) => {
             const user = users.find(el => el.id === args.id);

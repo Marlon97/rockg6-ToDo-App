@@ -1,0 +1,56 @@
+[
+  {
+    "id": "GH1000001",
+    "nombre": "Marlon ToDo",
+    "correo": "marlon@ToDo.com",
+    "secret": "mar#lon#secret"
+  },
+  {
+    "id": "GH1000002",
+    "nombre": "Víctor ToDo",
+    "correo": "victor@ToDo.com",
+    "secret": "vic#tor#secret"
+  },
+  {
+    "id": "GH1000003",
+    "nombre": "Jazmín ToDo",
+    "correo": "jazmin@ToDo.com",
+    "secret": "jaz#min#secret"
+  },
+  {
+    "id": "GH1000004",
+    "nombre": "Daniel ToDo",
+    "correo": "daniel@ToDo.com",
+    "secret": "dan#iel#secret"
+  },
+  {
+    "id": "1625202101096-599890",
+    "nombre": "prueba_1",
+    "correo": "prueba_1@ToDo.com",
+    "secret": "pru#ba_#secret"
+  },
+  {
+    "id": "1625202274190-183434",
+    "nombre": "prueba2",
+    "correo": "prueba2@ToDo.com",
+    "secret": "pru#eba2#secret"
+  },
+  {
+    "id": "1625202521822-971197",
+    "nombre": "prueba4",
+    "correo": "prueba4@ToDo.com",
+    "secret": "pru#eba4#secret"
+  },
+  {
+    "id": "1625202972464-740012",
+    "nombre": "prueba5",
+    "correo": "prueba5@ToDo.com",
+    "secret": "pru#eba5#secret"
+  },
+  {
+    "id": "1625203046543-777539",
+    "nombre": "prueba6",
+    "correo": "prueba6@ToDo.com",
+    "secret": "pru#eba6#secret"
+  }
+]
