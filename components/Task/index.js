@@ -7,7 +7,9 @@ const Task = ({element, title, open, close,point}) => {
       <div className={styles.container}>
         <button className={styles.editTask} onClick={() => open(false)}> &#9999; </button>
         <button className={styles.removeTask} onClick={() => 
-          {close(false);
+          {debugger
+            
+            close(element);
            point(element);
           }}>&#9746;</button>
       </div>

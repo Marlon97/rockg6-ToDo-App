@@ -42,18 +42,25 @@
     }
   }
   .accept {
+    background-color: #16a5f2;
     width: 180px;
     height: 60px;
+    color: oldlace;
+    font-weight: bold;
     font-family: "Montserrat", sans-serif;
     font-size: 24px;
     grid-column-start: 1;
   }
 
   .cancel {
+    opacity: 90%;
+    background-color: #f8f8f8;
+    font-weight: lighter;
     width: 180px;
     height: 60px;
     font-family: "Montserrat", sans-serif;
     font-size: 24px;
+    border:none;
     grid-column-start: 2;
   }
 }

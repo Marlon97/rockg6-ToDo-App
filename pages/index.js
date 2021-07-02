@@ -20,7 +20,7 @@ const tasks = [
 // Sets the submit task window as hidden.
 export default function Home() {
   const [hidden, setHidden] = useState(true);
-  const [hiddenRemove, setHiddenRemove] = useState(true);
+  const [hiddenRemove, setHiddenRemove] = useState(null);
   const onFormSubmit = (data) => {
     tasks.push(data);
   };
@@ -65,11 +65,11 @@ export default function Home() {
           />
         )}
 
-        {!hiddenRemove && (
+        {hiddenRemove!==null && (
           <PopupRemove
             close={setHiddenRemove}
-            item = {toDelete}
-            tasks = {tasks}
+            item={hiddenRemove}
+            tasks={tasks}
           />
         )}
       </div>
