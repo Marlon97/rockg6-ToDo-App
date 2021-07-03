@@ -42,65 +42,13 @@ const typeDefs = gql`
 
   type Mutation {
     addUser(nombre: String, correo: String, secret: String): User
-    addTask(category: String, title: String, description: String, status: String, start_date: String, end_date: String, finished_date: String, check_user_id: String): Task
-    addSubtask(task_id: String, id: String, category: String, title: String, description: String, status: String, start_date: String, end_date: String, finished_date: String, check_user_id: String): Subtask
+    addTask(category: String, title: String, description: String, status: String, start_date: String, end_date: String): Task
+    addSubtask(task_id: String, category: String, title: String, description: String, status: String, start_date: String, end_date: String): Subtask
     updateUser(id: String, nombre: String, correo: String): User
   }
 `;
 
 const fs = require("fs");
-
-/**
- const tasks = [
- {
-        id: "t1",
-        category: "cat1",
-        title: "title1",
-        description: "desc",
-        status: "stat",
-        start_date: "2021-06-28",
-        end_date: "2021-06-30",
-        finished_date: "2021-06-29",
-        check_user_id: "GH1000001",
-        sub_tasks: [
-            {
-                id: "t1_s1",
-                category: "cat1_1",
-                title: "title1_1",
-                description: "desc_1",
-                status: "stat_1",
-                start_date: "2021-06-29",
-                end_date: "2021-06-30",
-                finished_date: "2021-06-29",
-                check_user_id: "GH1000001_1"
-            },
-            {
-                id: "t1_s2",
-                category: "cat1_2",
-                title: "title1_2",
-                description: "desc_2",
-                status: "stat_2",
-                start_date: "2021-06-30",
-                end_date: "2021-06-30",
-                finished_date: "2021-06-30",
-                check_user_id: "GH1000001_2"
-            }
-        ]
-    },
- {
-        id: "t2",
-        category: "cat2",
-        title: "title2",
-        description: "desc2",
-        status: "stat2",
-        start_date: "2022-06-28",
-        end_date: "2022-06-30",
-        finished_date: "2022-06-29",
-        check_user_id: "GH1000002",
-        sub_tasks: []
-    }
- ];
- **/
 
 const users = require('./gql_documents/users');
 
@@ -156,7 +104,7 @@ const resolvers = {
                 category: args.category,
                 title: args.title,
                 description: args.description,
-                status: args.status,
+                status: "pending",
                 start_date: args.start_date,
                 end_date: args.end_date,
                 finished_date: "",
@@ -177,9 +125,24 @@ const resolvers = {
             return user;
         },
         addSubtask: (_, args) => {
+            let subtask = {
+                id: "st" + Date.now() + "-" + (Math.floor(Math.random() * (1000000 - 100000)) + 100000),
+                category: args.category,
+                title: args.title,
+                description: args.description,
+                status: "pending",
+                start_date: args.start_date,
+                end_date: args.end_date,
+                finished_date: "",
+                check_user_id: ""
+            };
             const subtasks = tasks.find(el => el.id === args.task_id).sub_tasks;
-            subtasks.push({id: args.id, category: args.category, title: args.title, description: args.description, status: args.status, start_date: args.start_date, end_date: args.end_date, finished_date: args.finished_date, check_user_id: args.check_user_id});
-            return subtasks[subtasks.length - 1];
+            subtasks.push({...subtask});
+            const data = JSON.stringify(tasks, '', 2);
+            fs.writeFile(tasks_path, data, () => {
+                console.log("subtasks database updated :) ")
+            });
+            return subtask;
         }
     }
 };
