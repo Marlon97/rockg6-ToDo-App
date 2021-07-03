@@ -5,11 +5,15 @@
   margin-bottom: 5rem;
   border-style: ridge;
   border-radius: 50px;
+  border-top: 2px ridge transparent;
+  border-bottom: 2px ridge transparent;
+  border-left: 2px ridge transparent;
+  border-right: 2px ridge transparent;
 }
 
-.task:hover {
+/*.task:hover {
   background-color: rgb(255, 255, 255, 0.2);
-}
+}*/
 
 .container {
   transform: translateX(-30px) translateY(-320px);
@@ -46,32 +50,42 @@
 
 .title {
   padding: 2rem;
-  border-bottom: 2px solid black;
-  font-size: 1.5rem;
+  border-top: 4px ridge white;
+  border-bottom: 4px ridge white;
+  font-size: 1.7rem;
+  border-radius: 45px;
 }
 
 .description {
   padding: 2rem;
-  border-top: 2px solid white; //transparent; //#000;
-  border-bottom: 2px solid black;
+  border-top: 4px ridge white; //transparent; //#000;
+  border-bottom: 4px ridge white;
+  border-radius: 45px;
+  font-size: 1.2rem;
   
 }
 
 .startDate {
   padding: 2rem;
-  border-top: 2px solid white;
-  border-bottom: 2px solid black;
+  border-top: 4px ridge white;
+  border-bottom: 4px ridge white;
+  border-radius: 45px;
+  font-size: 1.2rem;
   
 }
 
 .endDate {
   padding: 2rem;
-  border-top: 2px solid white;
+  border-top: 4px ridge white;
+  border-bottom: 4px ridge white;
+  border-radius: 45px;
+  font-size: 1.2rem;
   
 }
 
 .cb {
   position: relative;
-  top: 57px;
+  top: 63px;
   left: 9px;
+  cursor: auto;
 }
