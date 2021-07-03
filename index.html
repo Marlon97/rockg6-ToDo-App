@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./styles.css" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Roboto&display=swap"
+    rel="stylesheet" />
+  <script src="https://kit.fontawesome.com/57fa0c75ff.js" crossorigin="anonymous"></script>
+  <title>ToDo List</title>
+</head>
+
+<main>
+  <h1>Tasks</h1>
+  <p>What are your unfinished business?</p>
+  <div class="start-btn">
+    <p>Add Task</p>
+  </div>
+  <body>
+    <div class="container">
+      <h1 class="app-title">ToDo List</h1>
+      <ul class="todo-list js-todo-list"></ul>
+      <!-- adding an empty state (when the user don't have any task listed) -->
+      <div class="empty-state">
+        <svg class="checklist-icon"><use href="#checklist-icon"></use></svg>
+        <h2 class="empty-state__title">Add your first task</h2>
+        <p class="empty-state__description">What do you want to get done today?</p>
+      </div>
+      <!-- end -->
+      <form class="todo-form js-form">
+        <input autofocus type="text" aria-label="Enter a new todo item" placeholder="Create an event" class="js-todo-input">
+      </form>
+    </div>
+</body>
+</main>
+<!-- <script src="./poker.js"></script> -->
+
+
+</html>
+
