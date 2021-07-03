@@ -27,9 +27,9 @@ const Popup = ({ onceSubmited, close }) => {
               placeholder="Your task description (optional)"
             ></textarea>
               <div>Start date:</div>
-              <input {...register("startDate")} type="datetime-local" id="startDate" name="startDate"  min="2020-06-07T00:01" max="2022-06-14T00:00" required></input>
+              <input {...register("startDate")} type="date" id="startDate" name="startDate"  min="2015-06-07" max="2030-06-14" required></input>
               <div>End date:</div>
-              <input {...register("endDate")} type="datetime-local" id="endDate" name="endDate"  min="2020-06-07T00:01" max="2022-06-14T00:00" required></input>
+              <input {...register("endDate")} type="date" id="endDate" name="endDate"  min="2015-06-07" max="2030-06-14" required></input>
           </div>
           <input type="submit" className={styles["btn-submit"]} value="Add" />
         </form>
