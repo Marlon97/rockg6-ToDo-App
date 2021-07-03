@@ -1,9 +1,5 @@
 const { ApolloServer, gql } = require('apollo-server');
 const typeDefs = gql`
-  type Book {
-    title: String
-    author: String
-  }
   
   type Subtask{
       id: String
@@ -38,7 +34,6 @@ const typeDefs = gql`
   }
 
   type Query {
-    books: [Book]
     users: [User]
     user(secret: String!): User
     tasks: [Task]
@@ -46,7 +41,6 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    addBook(title: String, author: String): Book
     addUser(nombre: String, correo: String, secret: String): User
     addTask(category: String, title: String, description: String, status: String, start_date: String, end_date: String, finished_date: String, check_user_id: String): Task
     addSubtask(task_id: String, id: String, category: String, title: String, description: String, status: String, start_date: String, end_date: String, finished_date: String, check_user_id: String): Subtask
@@ -57,8 +51,8 @@ const typeDefs = gql`
 const fs = require("fs");
 
 /**
-const tasks = [
-    {
+ const tasks = [
+ {
         id: "t1",
         category: "cat1",
         title: "title1",
@@ -93,7 +87,7 @@ const tasks = [
             }
         ]
     },
-    {
+ {
         id: "t2",
         category: "cat2",
         title: "title2",
@@ -105,75 +99,26 @@ const tasks = [
         check_user_id: "GH1000002",
         sub_tasks: []
     }
-];
+ ];
  **/
 
-const users = require('./users.json');
-
-/**
-const users = [
-    {
-        id: "GH1000001",
-        nombre: "Marlon ToDo",
-        correo: "marlon@ToDo.com",
-        secret: "mar#lon#secret"
-    },
-    {
-        id: "GH1000002",
-        nombre: "Víctor ToDo",
-        correo: "victor@ToDo.com",
-        secret: "vic#tor#secret"
-    },
-    {
-        id: "GH1000003",
-        nombre: "Jazmín ToDo",
-        correo: "jazmin@ToDo.com",
-        secret: "jaz#min#secret"
-    },
-    {
-        id: "GH1000004",
-        nombre: "Daniel ToDo",
-        correo: "daniel@ToDo.com",
-        secret: "dan#iel#secret"
-    }
-];
- **/
+const users = require('./gql_documents/users');
 
 let tasks = [];
 let tasks_path = "";
 
-const books = [
-    {
-        title: 'The Awakening',
-        author: 'Kate Chopin',
-    },
-    {
-        title: 'City of Glass',
-        author: 'Paul Auster',
-    },
-];
 const resolvers = {
     Query: {
-        books: () => books,
         users: () => users,
         user: (_,args) => {
             const current_user = users.find(el => el.secret === args.secret);
             return current_user?current_user:{};
-            },
+        },
         tasks: () => tasks,
         subtasks: (_,args) => tasks.find(el => el.id === args.id).sub_tasks,
     },
     Mutation: {
-        addBook: (_, args) => {
-            console.log(args);
-            books.push({...args});
-            return 1;
-        },
         addUser: (_, args) => {
-            //console.log("users: ",users);
-            //console.log("to_users: ",typeof(users)===typeof([]));
-            //console.log("f_tasks: ",tasks);
-            //console.log("to_f_tasks: ",typeof(tasks)===typeof([]));
             let user = users.find(el => el.secret === args.secret);
             if(!user){
                 user = {
@@ -184,10 +129,10 @@ const resolvers = {
                 };
                 users.push({...user});
                 const data = JSON.stringify(users, '', 2);
-                fs.writeFile('./users.json', data, () => {
+                fs.writeFile('./gql_documents/users.json', data, () => {
                     console.log("users database updated :) ")
                 });
-                tasks_path = './'+user.id+".json";
+                tasks_path = './gql_documents/'+user.id+".json";
 
                 fs.writeFile(tasks_path, JSON.stringify([], '', 2), () => {
                     console.log("user tasks file created :) ")
@@ -195,7 +140,7 @@ const resolvers = {
 
 
             }else {
-                tasks_path = './' + user.id + ".json";
+                tasks_path = './gql_documents/'+user.id+".json";
             }
             try {
                 tasks = require(tasks_path);
@@ -203,9 +148,6 @@ const resolvers = {
                 tasks = [];
                 console.log("json vacío");
             }
-            //console.log("tasks_path: ",tasks_path)
-            //console.log("tasks: ",tasks);
-            //console.log("to_tasks: ",typeof(tasks)===typeof({}));
             return user;
         },
         addTask: (_, args) => {
