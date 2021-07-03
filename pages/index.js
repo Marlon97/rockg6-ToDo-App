@@ -1,16 +1,17 @@
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.scss";
-import Task from "../components/Task";
 import Popup from "../components/Popup";
-import { useState } from "react";
 import TaskList from "../components/TaskList";
 import PopupRemove from "../components/PopupRemove";
+import { useState } from "react";
+import { signIn, signOut, useSession } from "next-auth/client";
 
 const tasks = [
   {
     title: "Create a ToDo list app",
-    description: "Description: Using next, graphql and all the tools Roier has taught us.",
+    description:
+      "Description: Using next, graphql and all the tools Roier has taught us.",
     startDate: "From: July, 2nd",
     endDate: "Until: July, 4th",
   },
@@ -22,11 +23,11 @@ const tasks = [
   },
 ];
 
-
 // Sets the submit task window as hidden.
 export default function Home() {
   const [hidden, setHidden] = useState(true);
   const [hiddenRemove, setHiddenRemove] = useState(null);
+  const [session, loading] = useSession();
   const onFormSubmit = (data) => {
     console.log(data);
     tasks.push(data);
@@ -39,8 +40,6 @@ export default function Home() {
   };
 
   return (
-
-
     <div className={styles.container}>
       <Head>
         <title>ToDo App</title>
@@ -48,6 +47,27 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      {!session && (
+        <>
+          <button
+            onClick={() => signIn()}
+            className={styles["btn-abrir-popup"]}
+          >
+            Sign in
+          </button>
+        </>
+      )}
+
+      {session && (
+        <>
+          <button
+            onClick={() => signOut()}
+            className={styles["btn-abrir-popup"]}
+          >
+            Sign out
+          </button>
+        </>
+      )}
       <main className={styles.main}>
         <h1 className={styles.title}>Your ToDo's</h1>
 
@@ -55,22 +75,41 @@ export default function Home() {
       </main>
 
       <div className={styles.forms}>
-        <button
-          onClick={() => setHidden(false)}
-          id="btn-abrir-popup"
-          className={styles["btn-abrir-popup"]}
-        >
-          Add new task
-        </button>
+        <div className={styles["main-buttons"]}>
+          {!session && (
+            <>
+              Not signed in. Please sign in to add tasks <br />
+            </>
+          )}
+          {session && (
+            <>
+              <button
+                onClick={() => setHidden(false)}
+                id="btn-abrir-popup"
+                className={styles["btn-abrir-popup"]}
+              >
+                Add new task
+              </button>
+              <br />
+              <div className={styles.profile}>
+                <Image src={session.user.image} width="30" height="30"></Image>
+                <p>Signed in as {session.user.name} </p>
+              </div>
+              <br />
+            </>
+          )}
+        </div>
       </div>
 
-      <TaskList tasks={tasks} open={setHidden} close={setHiddenRemove} point={pointElement} />
+      <TaskList
+        tasks={tasks}
+        open={setHidden}
+        close={setHiddenRemove}
+        point={pointElement}
+      />
 
       {!hidden && (
-        <Popup
-          onceSubmited={(data) => onFormSubmit(data)}
-          close={setHidden}
-        />
+        <Popup onceSubmited={(data) => onFormSubmit(data)} close={setHidden} />
       )}
       {hiddenRemove !== null && (
         <PopupRemove
