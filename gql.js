@@ -45,10 +45,12 @@ const typeDefs = gql`
     addTask(category: String, title: String, description: String, status: String, start_date: String, end_date: String): Task
     addSubtask(task_id: String, category: String, title: String, description: String, status: String, start_date: String, end_date: String): Subtask
     updateUser(id: String, nombre: String, correo: String): User
-    updateTask(id: String, nombre: String, correo: String): Task
-    updateSubtask(id: String, nombre: String, correo: String): Subtask
+    updateTask(id: String, category: String, title: String, description: String, start_date: String, end_date: String): Task
+    updateSubtask(task_id: String, id: String, category: String, title: String, description: String, start_date: String, end_date: String): Subtask
     updateTaskStatus(id: String, status: String): Task
     updateSubtaskStatus(task_id: String, id: String, status: String): Subtask
+    deleteTask(id: String): String
+    deleteSubtask(task_id: String, id: String): String
   }
 `;
 
@@ -149,10 +151,30 @@ const resolvers = {
             return subtask;
         },
         updateTask: (_, args) => {
-
+            const task = tasks.find(el => el.id === args.id);
+            task.category = args.category;
+            task.title = args.title;
+            task.description = args.description;
+            task.start_date = args.start_date;
+            task.end_date = args.end_date;
+            const data = JSON.stringify(tasks, '', 2);
+            fs.writeFile(tasks_path, data, () => {
+                console.log("tasks database updated :) ")
+            });
+            return task;
         },
         updateSubtask: (_, args) => {
-
+            const subtask = (tasks.find(el => el.id === args.task_id).sub_tasks).find(el => el.id === args.id);
+            subtask.category = args.category;
+            subtask.title = args.title;
+            subtask.description = args.description;
+            subtask.start_date = args.start_date;
+            subtask.end_date = args.end_date;
+            const data = JSON.stringify(tasks, '', 2);
+            fs.writeFile(tasks_path, data, () => {
+                console.log("subtasks database updated :) ");
+            });
+            return subtask;
         },
         updateTaskStatus: (_, args) => {
             const task = tasks.find(el => el.id === args.id);
@@ -171,6 +193,12 @@ const resolvers = {
                 console.log("subtasks database updated :) ");
             });
             return subtask;
+        },
+        deleteTask: (_, args) => {
+
+        },
+        deleteSubtask: (_, args) => {
+
         }
     }
 };
