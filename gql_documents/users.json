@@ -1,0 +1,32 @@
+[
+  {
+    "id": "GH1000001",
+    "nombre": "Marlon ToDo",
+    "correo": "marlon@ToDo.com",
+    "secret": "mar#lon#secret"
+  },
+  {
+    "id": "GH1000002",
+    "nombre": "Víctor ToDo",
+    "correo": "victor@ToDo.com",
+    "secret": "vic#tor#secret"
+  },
+  {
+    "id": "GH1000003",
+    "nombre": "Jazmín ToDo",
+    "correo": "jazmin@ToDo.com",
+    "secret": "jaz#min#secret"
+  },
+  {
+    "id": "GH1000004",
+    "nombre": "Daniel ToDo",
+    "correo": "daniel@ToDo.com",
+    "secret": "dan#iel#secret"
+  },
+  {
+    "id": "1625350626628-168917",
+    "nombre": "prueba1",
+    "correo": "prueba1@ToDo.com",
+    "secret": "pru#eba1#secret"
+  }
+]
