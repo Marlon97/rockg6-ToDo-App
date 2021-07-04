@@ -45,6 +45,10 @@ const typeDefs = gql`
     addTask(category: String, title: String, description: String, status: String, start_date: String, end_date: String): Task
     addSubtask(task_id: String, category: String, title: String, description: String, status: String, start_date: String, end_date: String): Subtask
     updateUser(id: String, nombre: String, correo: String): User
+    updateTask(id: String, nombre: String, correo: String): Task
+    updateSubtask(id: String, nombre: String, correo: String): Subtask
+    updateTaskStatus(id: String, status: String): Task
+    updateSubtaskStatus(task_id: String, id: String, status: String): Subtask
   }
 `;
 
@@ -140,9 +144,21 @@ const resolvers = {
             subtasks.push({...subtask});
             const data = JSON.stringify(tasks, '', 2);
             fs.writeFile(tasks_path, data, () => {
-                console.log("subtasks database updated :) ")
+                console.log("subtasks database updated :) ");
             });
             return subtask;
+        },
+        updateTask: (_, args) => {
+
+        },
+        updateSubtask: (_, args) => {
+
+        },
+        updateTaskStatus: (_, args) => {
+
+        },
+        updateSubtaskStatus: (_, args) => {
+
         }
     }
 };
