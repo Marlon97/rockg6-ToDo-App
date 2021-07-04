@@ -49,8 +49,8 @@ const typeDefs = gql`
     updateSubtask(task_id: String, id: String, category: String, title: String, description: String, start_date: String, end_date: String): Subtask
     updateTaskStatus(id: String, status: String): Task
     updateSubtaskStatus(task_id: String, id: String, status: String): Subtask
-    deleteTask(id: String): String
-    deleteSubtask(task_id: String, id: String): String
+    deleteTask(id: String): Task
+    deleteSubtask(task_id: String, id: String): Subtask
   }
 `;
 
@@ -128,6 +128,10 @@ const resolvers = {
             const user = users.find(el => el.id === args.id);
             user.nombre = args.nombre;
             user.correo = args.correo;
+            const data = JSON.stringify(users, '', 2);
+            fs.writeFile('./gql_documents/users.json', data, () => {
+                console.log("users database updated :) ")
+            });
             return user;
         },
         addSubtask: (_, args) => {
@@ -195,10 +199,23 @@ const resolvers = {
             return subtask;
         },
         deleteTask: (_, args) => {
-
+            const task = tasks.find(el => el.id === args.id);
+            tasks.splice(tasks.indexOf(task),1);
+            const data = JSON.stringify(tasks, '', 2);
+            fs.writeFile(tasks_path, data, () => {
+                console.log("tasks database updated :) ");
+            });
+            return task;
         },
         deleteSubtask: (_, args) => {
-
+            const subtasks = tasks.find(el => el.id === args.task_id).sub_tasks;
+            const subtask = subtasks.find(el => el.id === args.id);
+            subtasks.splice(subtasks.indexOf(subtask),1);
+            const data = JSON.stringify(tasks, '', 2);
+            fs.writeFile(tasks_path, data, () => {
+                console.log("subtasks database updated :) ");
+            });
+            return subtask;
         }
     }
 };
