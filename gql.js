@@ -155,10 +155,22 @@ const resolvers = {
 
         },
         updateTaskStatus: (_, args) => {
-
+            const task = tasks.find(el => el.id === args.id);
+            task.status = args.status;
+            const data = JSON.stringify(tasks, '', 2);
+            fs.writeFile(tasks_path, data, () => {
+                console.log("tasks database updated :) ")
+            });
+            return task;
         },
         updateSubtaskStatus: (_, args) => {
-
+            const subtask = (tasks.find(el => el.id === args.task_id).sub_tasks).find(el => el.id === args.id);
+            subtask.status = args.status;
+            const data = JSON.stringify(tasks, '', 2);
+            fs.writeFile(tasks_path, data, () => {
+                console.log("subtasks database updated :) ");
+            });
+            return subtask;
         }
     }
 };
