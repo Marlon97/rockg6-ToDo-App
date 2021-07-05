@@ -11,7 +11,7 @@ const tasks = [
   {
     title: "Create a ToDo list app",
     description:
-      "Description: Using next, graphql and all the tools Roier has taught us.",
+      "Using next, graphql and all the tools Roier has taught us.",
     startDate: "July, 2nd",
     endDate: "July, 4th",
     startTime: "13:00",
@@ -19,7 +19,7 @@ const tasks = [
   },
   {
     title: "Pet my dog",
-    description: "Description: ---",
+    description: "---",
     startDate: "July, 1st",
     endDate: "July, 3rd",
     startTime: "13:00",
