@@ -10,8 +10,8 @@ const Task = ({ element, title, id, completed, description, startDate, endDate, 
     </div>
     <div className={styles.title}>{title}</div>
     <div className={styles.description}>Description: {description}</div>
-    <div className={styles.startDate}> Start: {startDate.replace("T"," ")} </div>
-    <div className={styles.endDate}> End: {endDate.replace("T"," ")}</div>
+    <div className={styles.startDate}> Start: {startDate.replace("T"," *Time: ")} </div>
+    <div className={styles.endDate}> End: {endDate.replace("T"," *Time: ")} </div>
 
     <div className={styles.container}>
       <button className={styles.editTask} onClick={() => open(false)}> &#9999; </button>

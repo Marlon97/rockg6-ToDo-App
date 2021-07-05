@@ -1,6 +1,6 @@
 .task {
   width: 50rem;
-  height: 24rem;
+  height: 27rem;
   margin: 5% auto;
   margin-bottom: 1rem;
   border-style: ridge;
@@ -70,20 +70,20 @@
 .startDate {
   padding: 2rem;
   border-top: 4px ridge rgb(248, 245, 245, 0.2);
-  border-bottom: 4px ridge rgb(248, 245, 245);
-  border-radius: 10px;
+  border-bottom: 4px ridge rgb(248, 245, 245, 0.2);
+  border-radius: 5px;
   font-size: 1.2rem;
   font-weight: bold;
 }
 
 .endDate {
+  padding: 2rem;
   border-top: 4px ridge transparent;
-  border-bottom: 4px ridge transparent; 
-  border-radius: 20px;
+  border-bottom: 4px ridge rgb(248, 245, 245); 
+  border-radius: 5px;
   font-size: 1.2rem;
-  color: yellow;
   font-weight: bold;
-  margin-top: 1rem;
+  color: yellow;
 }
 
 .cb {
