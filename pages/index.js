@@ -6,7 +6,13 @@ import TaskList from "../components/TaskList";
 import PopupRemove from "../components/PopupRemove";
 import { useState } from "react";
 import { signIn, signOut, useSession, getSession } from "next-auth/client";
-import { ApolloClient, gql, InMemoryCache } from "@apollo/client";
+import {
+  ApolloClient,
+  gql,
+  useQuery,
+  useMutation,
+  InMemoryCache,
+} from "@apollo/client";
 
 const { GRAPHQL_SERVER } = process.env;
 
@@ -16,7 +22,7 @@ const client = new ApolloClient({
 });
 
 const taskQuery = gql`
-  query {
+  query GetTasks {
     tasks {
       title
       description
@@ -37,18 +43,58 @@ const addUserMutation = gql`
   }
 `;
 
+const addTaskMutation = gql`
+  mutation(
+    $title: String
+    $description: String
+    $start_date: String
+    $end_date: String
+  ) {
+    addTask(
+      title: $title
+      description: $description
+      start_date: $start_date
+      end_date: $end_date
+    ) {
+      title
+      description
+      start_date
+      end_date
+    }
+  }
+`;
+
 // Sets the submit task window as hidden.
 export default function Home({ tasks }) {
   const [hidden, setHidden] = useState(true);
   const [hiddenRemove, setHiddenRemove] = useState(null);
   const [session, loading] = useSession();
+  const { data, loadingData, error } = useQuery(taskQuery);
+  const [addTask] = useMutation(addTaskMutation, {
+    refetchQueries: [{ query: taskQuery }],
+  });
 
-  if (!loading) {
-    console.log(session);
+  if (loading) {
+    return <p>Loading...</p>;
   }
 
+  /*
+  if (data != undefined) {
+    tasks = data.tasks;
+  }
+  */
+
   const onFormSubmit = (data) => {
-    tasks.push(data);
+    console.log(data);
+    //tasks.push(data);
+    addTask({
+      variables: {
+        title: data.title,
+        description: data.description,
+        start_date: data.startDate,
+        end_date: data.endDate,
+      },
+    });
   };
 
   var toDelete;
@@ -121,7 +167,7 @@ export default function Home({ tasks }) {
 
       {session && (
         <TaskList
-          tasks={tasks}
+          tasks={data.tasks}
           open={setHidden}
           close={setHiddenRemove}
           point={pointElement}
