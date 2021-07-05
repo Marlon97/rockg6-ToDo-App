@@ -2,13 +2,14 @@
   width: 50rem;
   height: 24rem;
   margin: 5% auto;
-  margin-bottom: 5rem;
+  margin-bottom: 1rem;
   border-style: ridge;
   border-radius: 50px;
   border-top: 2px ridge transparent;
   border-bottom: 2px ridge transparent;
-  border-left: 2px ridge transparent;
-  border-right: 2px ridge transparent;
+  border-left: 2px ridge white;
+  border-right: 2px ridge white;
+  border-width: 10px;
 }
 
 /*.task:hover {
@@ -50,37 +51,39 @@
 
 .title {
   padding: 2rem;
-  border-top: 4px ridge white;
-  border-bottom: 4px ridge white;
+  border-top: 4px ridge rgb(248, 245, 245);
+  border-bottom: 4px ridge rgb(248, 245, 245, 0.2);
   font-size: 1.7rem;
-  border-radius: 45px;
+  font-weight: bold;
+  border-radius: 10px;
 }
 
 .description {
   padding: 2rem;
-  border-top: 4px ridge white; //transparent; //#000;
-  border-bottom: 4px ridge white;
-  border-radius: 45px;
+  border-top: 4px ridge rgb(248, 245, 245, 0.2); //transparent; //#000;
+  border-bottom: 4px ridge rgb(248, 245, 245, 0.2);
+  border-radius: 10px;
   font-size: 1.2rem;
   
 }
 
 .startDate {
   padding: 2rem;
-  border-top: 4px ridge white;
-  border-bottom: 4px ridge white;
-  border-radius: 45px;
+  border-top: 4px ridge rgb(248, 245, 245, 0.2);
+  border-bottom: 4px ridge rgb(248, 245, 245);
+  border-radius: 10px;
   font-size: 1.2rem;
-  
+  font-weight: bold;
 }
 
 .endDate {
-  padding: 2rem;
-  border-top: 4px ridge white;
-  border-bottom: 4px ridge white;
-  border-radius: 45px;
+  border-top: 4px ridge transparent;
+  border-bottom: 4px ridge transparent; 
+  border-radius: 20px;
   font-size: 1.2rem;
-  
+  color: yellow;
+  font-weight: bold;
+  margin-top: 1rem;
 }
 
 .cb {

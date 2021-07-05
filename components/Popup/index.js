@@ -27,9 +27,13 @@ const Popup = ({ onceSubmited, close }) => {
               placeholder="Your task description (optional)"
             ></textarea>
               <div>Start date:</div>
-              <input {...register("startDate")} type="date" id="startDate" name="startDate"  min="2015-06-07" max="2030-06-14" required></input>
+              <input {...register("startDate")} type="date" id="startDate" name="startDate"  min="2015-06-07" max="2030-06-14" required></input> 
+              <div>Start time:</div>
+              <input {...register("startTime")} type="time" id="startTime" name="startTime"  min="00:00" max="23:59" required></input>
               <div>End date:</div>
               <input {...register("endDate")} type="date" id="endDate" name="endDate"  min="2015-06-07" max="2030-06-14" required></input>
+              <div>End time:</div>
+              <input {...register("endTime")} type="time" id="endTime" name="endTime"  min="00:00" max="23:59" required></input>
           </div>
           <input type="submit" className={styles["btn-submit"]} value="Add" />
         </form>
