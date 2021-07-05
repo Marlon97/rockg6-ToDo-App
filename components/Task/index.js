@@ -3,6 +3,7 @@ import styles from "./Task.module.scss";
 
 const Task = ({
   element,
+  task_id,
   title,
   id,
   completed,
@@ -25,15 +26,17 @@ const Task = ({
       <div className={styles.endDate}>{endDate}</div>
 
       <div className={styles.container}>
+        {/*
         <button className={styles.editTask} onClick={() => open(false)}>
           {" "}
           &#9999;{" "}
         </button>
+        */}
         <button
           className={styles.removeTask}
           onClick={() => {
             close(element);
-            point(element);
+            point(task_id);
           }}
         >
           &#9746;

@@ -5,6 +5,7 @@ const TaskList = ({ tasks, open, close, point }) => {
   const taskArray = tasks.map((task, index) => (
     <Task
       key={index}
+      task_id={task.id}
       title={task.title}
       element={parseInt(index)}
       open={open}

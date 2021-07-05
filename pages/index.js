@@ -22,8 +22,9 @@ const client = new ApolloClient({
 });
 
 const taskQuery = gql`
-  query GetTasks {
+  query {
     tasks {
+      id
       title
       description
       start_date
@@ -64,6 +65,14 @@ const addTaskMutation = gql`
   }
 `;
 
+const deleteTaskMutation = gql`
+  mutation($id: String) {
+    deleteTask(id: $id) {
+      id
+    }
+  }
+`;
+
 // Sets the submit task window as hidden.
 export default function Home({ tasks }) {
   const [hidden, setHidden] = useState(true);
@@ -73,20 +82,15 @@ export default function Home({ tasks }) {
   const [addTask] = useMutation(addTaskMutation, {
     refetchQueries: [{ query: taskQuery }],
   });
+  const [deleteTask] = useMutation(deleteTaskMutation, {
+    refetchQueries: [{ query: taskQuery }],
+  });
 
   if (loading) {
     return <p>Loading...</p>;
   }
 
-  /*
-  if (data != undefined) {
-    tasks = data.tasks;
-  }
-  */
-
   const onFormSubmit = (data) => {
-    console.log(data);
-    //tasks.push(data);
     addTask({
       variables: {
         title: data.title,
@@ -97,11 +101,11 @@ export default function Home({ tasks }) {
     });
   };
 
-  var toDelete;
-
   const pointElement = (element) => {
-    toDelete = element;
+    let toDelete = element;
   };
+
+  console.log(data);
 
   return (
     <div className={styles.container}>
@@ -165,7 +169,7 @@ export default function Home({ tasks }) {
         </div>
       </div>
 
-      {session && (
+      {session && data != undefined && (
         <TaskList
           tasks={data.tasks}
           open={setHidden}
@@ -181,7 +185,8 @@ export default function Home({ tasks }) {
         <PopupRemove
           close={setHiddenRemove}
           item={hiddenRemove}
-          tasks={tasks}
+          tasks={data.tasks}
+          deleteTask={deleteTask}
         />
       )}
     </div>
