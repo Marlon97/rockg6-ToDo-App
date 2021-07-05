@@ -40,3 +40,7 @@ yarn-error.log*
 #json
 package-lock.json*
 yarn.lock*
+
+
+#gql
+gql_documents/tasks_directory/*
