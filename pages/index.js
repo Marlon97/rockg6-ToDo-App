@@ -5,31 +5,49 @@ import Popup from "../components/Popup";
 import TaskList from "../components/TaskList";
 import PopupRemove from "../components/PopupRemove";
 import { useState } from "react";
-import { signIn, signOut, useSession } from "next-auth/client";
+import { signIn, signOut, useSession, getSession } from "next-auth/client";
+import { ApolloClient, gql, InMemoryCache } from "@apollo/client";
 
-const tasks = [
-  {
-    title: "Create a ToDo list app",
-    description:
-      "Description: Using next, graphql and all the tools Roier has taught us.",
-    startDate: "From: July, 2nd",
-    endDate: "Until: July, 4th",
-  },
-  {
-    title: "Pet my dog",
-    description: "Description: ---",
-    startDate: "From: July, 1st",
-    endDate: "Until: July, 3rd",
-  },
-];
+const { GRAPHQL_SERVER } = process.env;
+
+const client = new ApolloClient({
+  uri: GRAPHQL_SERVER,
+  cache: new InMemoryCache(),
+});
+
+const taskQuery = gql`
+  query {
+    tasks {
+      title
+      description
+      start_date
+      end_date
+    }
+  }
+`;
+
+const addUserMutation = gql`
+  mutation($nombre: String, $correo: String, $secret: String) {
+    addUser(nombre: $nombre, correo: $correo, secret: $secret) {
+      nombre
+      id
+      correo
+      secret
+    }
+  }
+`;
 
 // Sets the submit task window as hidden.
-export default function Home() {
+export default function Home({ tasks }) {
   const [hidden, setHidden] = useState(true);
   const [hiddenRemove, setHiddenRemove] = useState(null);
   const [session, loading] = useSession();
+
+  if (!loading) {
+    console.log(session);
+  }
+
   const onFormSubmit = (data) => {
-    console.log(data);
     tasks.push(data);
   };
 
@@ -101,12 +119,14 @@ export default function Home() {
         </div>
       </div>
 
-      <TaskList
-        tasks={tasks}
-        open={setHidden}
-        close={setHiddenRemove}
-        point={pointElement}
-      />
+      {session && (
+        <TaskList
+          tasks={tasks}
+          open={setHidden}
+          close={setHiddenRemove}
+          point={pointElement}
+        />
+      )}
 
       {!hidden && (
         <Popup onceSubmited={(data) => onFormSubmit(data)} close={setHidden} />
@@ -120,4 +140,31 @@ export default function Home() {
       )}
     </div>
   );
+}
+
+export async function getServerSideProps(context) {
+  const session = await getSession(context);
+
+  if (session) {
+    const addUserData = await client.query({
+      query: addUserMutation,
+      variables: {
+        nombre: session.user.name,
+        correo: session.user.email,
+        secret: session.user.name,
+      },
+      fetchPolicy: "no-cache",
+    });
+  }
+
+  const taskData = await client.query({
+    query: taskQuery,
+    fetchPolicy: "no-cache",
+  });
+
+  return {
+    props: {
+      tasks: taskData.data.tasks,
+    }, // will be passed to the page component as props
+  };
 }

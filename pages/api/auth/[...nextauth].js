@@ -8,11 +8,12 @@ export default NextAuth({
       clientId: process.env.GITHUB_ID,
       clientSecret: process.env.GITHUB_SECRET,
       profile(profile) {
+        console.log(profile);
         return {
           id: profile.id,
           name: profile.name || profile.login,
-          email: profile.email,
           image: profile.avatar_url,
+          email: profile.email,
         };
       },
     }),
