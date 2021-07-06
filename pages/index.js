@@ -5,39 +5,108 @@ import Popup from "../components/Popup";
 import TaskList from "../components/TaskList";
 import PopupRemove from "../components/PopupRemove";
 import { useState } from "react";
-import { signIn, signOut, useSession } from "next-auth/client";
+import { signIn, signOut, useSession, getSession } from "next-auth/client";
+import {
+  ApolloClient,
+  gql,
+  useQuery,
+  useMutation,
+  InMemoryCache,
+} from "@apollo/client";
 
-const tasks = [
-  {
-    title: "Create a ToDo list app",
-    description:
-      "Using next, graphql and all the tools Roier has taught us.",
-    startDate: "From: July, 2nd",
-    endDate: "Until: July, 4th",
-  },
-  {
-    title: "Pet my dog",
-    description: "---",
-    startDate: "From: July, 1st",
-    endDate: "Until: July, 3rd",
-  },
-];
+const { GRAPHQL_SERVER } = process.env;
+
+const client = new ApolloClient({
+  uri: GRAPHQL_SERVER,
+  cache: new InMemoryCache(),
+});
+
+const taskQuery = gql`
+  query {
+    tasks {
+      id
+      title
+      description
+      start_date
+      end_date
+    }
+  }
+`;
+
+const addUserMutation = gql`
+  mutation($nombre: String, $correo: String, $secret: String) {
+    addUser(nombre: $nombre, correo: $correo, secret: $secret) {
+      nombre
+      id
+      correo
+      secret
+    }
+  }
+`;
+
+const addTaskMutation = gql`
+  mutation(
+    $title: String
+    $description: String
+    $start_date: String
+    $end_date: String
+  ) {
+    addTask(
+      title: $title
+      description: $description
+      start_date: $start_date
+      end_date: $end_date
+    ) {
+      title
+      description
+      start_date
+      end_date
+    }
+  }
+`;
+
+const deleteTaskMutation = gql`
+  mutation($id: String) {
+    deleteTask(id: $id) {
+      id
+    }
+  }
+`;
 
 // Sets the submit task window as hidden.
-export default function Home() {
+export default function Home({ tasks }) {
   const [hidden, setHidden] = useState(true);
   const [hiddenRemove, setHiddenRemove] = useState(null);
   const [session, loading] = useSession();
-  const onFormSubmit = (data) => {
-    console.log(data);
-    tasks.push(data);
-  };
+  const { data, loadingData, error } = useQuery(taskQuery);
+  const { dataUser, loadingUser, errorUser } = useMutation(addUserMutation);
+  const [addTask] = useMutation(addTaskMutation, {
+    refetchQueries: [{ query: taskQuery }],
+  });
+  const [deleteTask] = useMutation(deleteTaskMutation, {
+    refetchQueries: [{ query: taskQuery }],
+  });
 
-  var toDelete;
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  const onFormSubmit = (data) => {
+    addTask({
+      variables: {
+        title: data.title,
+        description: data.description,
+        start_date: data.startDate,
+        end_date: data.endDate,
+      },
+    });
+  };
 
   const pointElement = (element) => {
-    toDelete = element;
+    let toDelete = element;
   };
+
+  console.log(data);
 
   return (
     <div className={styles.container}>
@@ -101,12 +170,14 @@ export default function Home() {
         </div>
       </div>
 
-      <TaskList
-        tasks={tasks}
-        open={setHidden}
-        close={setHiddenRemove}
-        point={pointElement}
-      />
+      {session && data != undefined && (
+        <TaskList
+          tasks={data.tasks}
+          open={setHidden}
+          close={setHiddenRemove}
+          point={pointElement}
+        />
+      )}
 
       {!hidden && (
         <Popup onceSubmited={(data) => onFormSubmit(data)} close={setHidden} />
@@ -115,9 +186,37 @@ export default function Home() {
         <PopupRemove
           close={setHiddenRemove}
           item={hiddenRemove}
-          tasks={tasks}
+          tasks={data.tasks}
+          deleteTask={deleteTask}
         />
       )}
     </div>
   );
+}
+
+export async function getServerSideProps(context) {
+  const session = await getSession(context);
+
+  if (session) {
+    const addUserData = await client.query({
+      query: addUserMutation,
+      variables: {
+        nombre: session.user.name,
+        correo: session.user.email,
+        secret: session.user.name,
+      },
+      fetchPolicy: "no-cache",
+    });
+  }
+
+  const taskData = await client.query({
+    query: taskQuery,
+    fetchPolicy: "no-cache",
+  });
+
+  return {
+    props: {
+      tasks: taskData.data.tasks,
+    }, // will be passed to the page component as props
+  };
 }
